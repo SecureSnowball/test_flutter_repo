@@ -32,9 +32,9 @@ Future saveUser(final User user, {SharedPreferences? pref}) async {
   await Future.wait([
     pref.setInt('id', user.id!),
     pref.setString('name', user.name),
-    pref.setString('email', user.email ?? ""),
-    pref.setString('mobile', user.mobile ?? ""),
-    pref.setBool('emailVerified', user.emailVerified!),
+    pref.setString('email', user.email),
+    pref.setString(
+        'emailVerifiedAt', user.emailVerifiedAt?.toIso8601String() ?? ''),
   ]);
 }
 
@@ -53,12 +53,14 @@ Future<AuthResponse> _loadAuthPrefs() async {
   final id = pref.getInt('id');
   final name = pref.getString('name')!;
   final email = pref.getString('email')!;
-  final emailVerified = pref.getBool('emailVerified');
+  final emailVerifiedAt = pref.getString('emailVerifiedAt');
   final user = User(
     id: id,
     name: name,
     email: email,
-    emailVerified: emailVerified,
+    emailVerifiedAt: emailVerifiedAt == null && emailVerifiedAt != ''
+        ? DateTime.parse(emailVerifiedAt!)
+        : null,
   );
   return AuthResponse(token: token, user: user);
 }

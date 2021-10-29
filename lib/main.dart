@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       providers: [ChangeNotifierProvider(create: (_) => AuthState())],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: Test App,
+        title: 'Test App',
         theme: ThemeData(primarySwatch: Colors.blue),
         home: const MyHomePage(title: 'Flutter Demo Home Page'),
         routes: {
